@@ -1,0 +1,7 @@
+{
+  "name": "carrospro",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
