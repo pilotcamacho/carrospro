@@ -1,17 +1,54 @@
 import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 
-/*== STEP 1 ===============================================================
-The section below creates a Todo database table with a "content" field. Try
-adding a new "isDone" field as a boolean. The authorization rule below
-specifies that any unauthenticated user can "create", "read", "update", 
-and "delete" any "Todo" records.
-=========================================================================*/
 const schema = a.schema({
-  Carro: a
-    .model({
-      name: a.string(),
-    })
-    .authorization((allow) => [allow.guest()]),
+
+  Propietario: a.model({
+    id: a.id().required(),
+    purchaseDate: a.date().required(),
+    carroId: a.id().required(),
+    carro: a.belongsTo('Carro', 'carroId'),
+  }).identifier(['id', 'carroId'])
+    .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
+
+  Document: a.model({
+    type: a.enum(['jpg', 'pdf']),
+    s3_path: a.string(),
+    s3_thumbnail_path: a.string(),
+    issueDate: a.date(),
+    expirationDate: a.date(),
+    cost: a.float(),
+    carroId: a.id().required(),
+    carro: a.belongsTo('Carro', 'carroId'),
+  }).secondaryIndexes((index) => [index("carroId").sortKeys(['expirationDate'])])
+    .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
+
+  Service: a.model({
+    name: a.string().required(),
+    type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'Llantas', 'Taller']),
+    description: a.string(),
+    price: a.float().required(),
+    dateTime: a.datetime().required(),
+    location: a.customType({
+      lat: a.float().required(),
+      long: a.float().required(),
+    }),
+    carroId: a.id().required(),
+    carro: a.belongsTo('Carro', 'carroId'),
+  }).secondaryIndexes((index) => [index("carroId").sortKeys(['dateTime'])])
+    .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
+
+  Carro: a.model({
+    name: a.string().required(),
+    brand: a.string().required(),
+    model: a.string().required(),
+    year: a.integer().required(),
+    plate: a.string().required(),
+    color: a.string().required(),
+    documents: a.hasMany('Document', 'carroId'),
+    services: a.hasMany('Service', 'carroId'),
+    propietarios: a.hasMany('Propietario', 'carroId'),
+  })
+    .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
@@ -20,35 +57,8 @@ export const data = defineData({
   name: 'CarrosProData',
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'identityPool',
+    defaultAuthorizationMode: 'userPool',
   },
 });
 
-/*== STEP 2 ===============================================================
-Go to your frontend source code. From your client-side code, generate a
-Data client to make CRUDL requests to your table. (THIS SNIPPET WILL ONLY
-WORK IN THE FRONTEND CODE FILE.)
 
-Using JavaScript or Next.js React Server Components, Middleware, Server 
-Actions or Pages Router? Review how to generate Data clients for those use
-cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
-=========================================================================*/
-
-/*
-"use client"
-import { generateClient } from "aws-amplify/data";
-import type { Schema } from "@/amplify/data/resource";
-
-const client = generateClient<Schema>() // use this Data client for CRUDL requests
-*/
-
-/*== STEP 3 ===============================================================
-Fetch records from the database and use them in your frontend component.
-(THIS SNIPPET WILL ONLY WORK IN THE FRONTEND CODE FILE.)
-=========================================================================*/
-
-/* For example, in a React component, you can use this snippet in your
-  function's RETURN statement */
-// const { data: todos } = await client.models.Todo.list()
-
-// return <ul>{todos.map(todo => <li key={todo.id}>{todo.content}</li>)}</ul>

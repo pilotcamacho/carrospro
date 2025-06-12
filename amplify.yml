@@ -12,6 +12,8 @@ frontend:
         - npm install -g @ionic/cli
         - npm install aws-amplify
         - npm install @aws-amplify/ui-angular
+        - npm install @capacitor/geolocation
+        - npm install @capacitor/local-notifications
         - ionic build --prod
   artifacts:
     baseDirectory: www
