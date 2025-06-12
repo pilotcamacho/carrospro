@@ -1,39 +1,33 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {
-  IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonLabel, IonItem,
+import { FormsModule,  FormBuilder, FormGroup, Validators, ReactiveFormsModule  } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonLabel, IonItem,
   IonButton, IonInput
-} from '@ionic/angular/standalone';
+ } from '@ionic/angular/standalone';
 
 import { Router } from '@angular/router';
 import { CarrosService } from 'src/app/services/carros.service';
-import { ActivatedRoute } from '@angular/router';
-
 
 @Component({
-  selector: 'app-carro',
-  templateUrl: './carro.page.html',
-  styleUrls: ['./carro.page.scss'],
+  selector: 'app-carro-new',
+  templateUrl: './carro-new.page.html',
+  styleUrls: ['./carro-new.page.scss'],
   standalone: true,
   imports: [IonItem, IonLabel, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
     ReactiveFormsModule, IonButton, IonInput
-  ]
-})
-export class CarroPage implements OnInit {
+  ]})
+export class CarroNewPage implements OnInit {
 
   carroForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private carrosService: CarrosService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) { }
 
   ngOnInit() {
     this.carroForm = this.fb.group({
-      id: ['', Validators.required],
       name: ['', Validators.required],
       brand: ['', Validators.required],
       model: ['', Validators.required],
@@ -41,24 +35,6 @@ export class CarroPage implements OnInit {
       plate: ['', Validators.required],
       color: ['', Validators.required]
     });
-
-    const carroId = this.route.snapshot.paramMap.get('carroId');
-
-    if (carroId && carroId !== 'new') {
-      this.loadCarro(carroId);
-    }
-  }
-
-  async loadCarro(carroId: string) {
-    try {
-      const carro = await this.carrosService.getCarroById(carroId);
-      if (carro) {
-        this.carroForm.patchValue(carro);
-      }
-    } catch (error) {
-      console.error('Error loading carro:', error);
-      // Optional: redirect or show message
-    }
   }
 
   async onSubmit() {
@@ -68,7 +44,7 @@ export class CarroPage implements OnInit {
       ...this.carroForm.value
     };
 
-    const newCarro = await this.carrosService.updateCarro(carroData);
+    const newCarro = await this.carrosService.createCarro(carroData);
     console.log('Carro creado:', newCarro);
     this.router.navigate(['/carros']); // or wherever the list of carros is
   }

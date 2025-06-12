@@ -16,24 +16,40 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <ion-card *ngFor="let carro of carros">
-      <ion-card-header>
-        <ion-card-title>{{ carro.name }}</ion-card-title>
-        <ion-card-subtitle>{{ carro.brand }} - {{ carro.model }} ({{ carro.year }})</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-item>
-          <ion-label color="medium">Placa</ion-label>
-          <ion-note slot="end">{{ carro.plate }}</ion-note>
-        </ion-item>
-        <ion-item>
-          <ion-label color="medium">Color</ion-label>
-          <ion-note slot="end">{{ carro.color }}</ion-note>
-        </ion-item>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
+<ion-list>
+  <ion-item-sliding *ngFor="let carro of carros">
+
+    <!-- Swipe options -->
+    <ion-item-options side="end">
+      <ion-item-option color="danger" (click)="deleteCarro(carro)">
+        Eliminar
+      </ion-item-option>
+    </ion-item-options>
+
+    <!-- Main tappable area -->
+    <ion-item lines="none" class="ion-no-padding" button detail (click)="goToCarro(carro)">
+      <ion-card class="ion-margin-vertical ion-no-margin card-full-width">
+        <ion-card-header>
+          <ion-card-title>{{ carro.name }}</ion-card-title>
+          <ion-card-subtitle>{{ carro.brand }} - {{ carro.model }} ({{ carro.year }})</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item lines="none">
+            <ion-label color="medium">Placa</ion-label>
+            <ion-note slot="end">{{ carro.plate }}</ion-note>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label color="medium">Color</ion-label>
+            <ion-note slot="end">{{ carro.color }}</ion-note>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+
+  </ion-item-sliding>
+</ion-list>
+
+
 
 
   <ion-button expand="block" (click)="addCarro()">Agregar nuevo carro</ion-button>

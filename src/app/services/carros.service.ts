@@ -24,6 +24,12 @@ export class CarrosService {
     private usuarioSrv: UsuarioService
   ) { }
 
+  async getCarroById(carroId: string): Promise<CarroSelectionSet | null> {
+    const { data: carro, errors } = await client.models.Carro.get({ id: carroId }, { selectionSet: carroSelectionSet });
+    console.log('CarrosService::getCarroById', carro, errors);
+    return carro;
+  }
+
   async listCarros(): Promise<CarroSelectionSet[]> {
     const { data: carros, errors } = await client.models.Carro.list({ selectionSet: carroSelectionSet });
     console.log('CarrosService::listCarros', carros, errors);
@@ -44,6 +50,27 @@ export class CarrosService {
     // const createdAt = new Date().toISOString()
     // const currentLocation = await this.locationSrv.getCurrentLocation()
     const { data: createdCarro, errors } = await client.models.Carro.create(
+      carroData );
+    console.log('CarrosService::createCarro', createdCarro, errors);
+    return createdCarro
+  }
+
+  
+  async updateCarro(carroData:
+    {
+      id: string,
+      name: string,
+      brand: string,
+      model: string,
+      year: number,
+      plate: string,
+      color: string
+    }
+  ): Promise<any> {
+    // const usuario = this.usuarioSrv.usuarioId
+    // const createdAt = new Date().toISOString()
+    // const currentLocation = await this.locationSrv.getCurrentLocation()
+    const { data: createdCarro, errors } = await client.models.Carro.update(
       carroData );
     console.log('CarrosService::createCarro', createdCarro, errors);
     return createdCarro

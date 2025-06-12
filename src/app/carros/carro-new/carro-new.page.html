@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/carros"></ion-back-button>
     </ion-buttons>
-    <ion-title>Carro
+    <ion-title>Carro Nuevo
       <!--<ion-icon name="reload-outline" (click)="goRefreshPage()"></ion-icon>-->
     </ion-title>
   </ion-toolbar>
@@ -11,12 +11,6 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <form [formGroup]="carroForm" (ngSubmit)="onSubmit()">
-
-    <!-- <ion-item>
-      <ion-label position="floating">Id</ion-label>
-      <ion-input formControlName="id"></ion-input>
-    </ion-item> -->
-
 
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
@@ -49,7 +43,8 @@
     </ion-item>
 
     <ion-button expand="block" type="submit" [disabled]="carroForm.invalid">
-      Guardar cambios
+      Crear Carro
     </ion-button>
   </form>
 </ion-content>
+

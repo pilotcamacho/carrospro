@@ -12,8 +12,11 @@ export const routes: Routes = [
   },
 
   {
-    // path: 'carro/:carroId',
-    path: 'carro',
+    path: 'carro/:carroId',
     loadComponent: () => import('./carros/carro/carro.page').then(m => m.CarroPage)
+  },
+  {
+    path: 'carro-new',
+    loadComponent: () => import('./carros/carro-new/carro-new.page').then( m => m.CarroNewPage)
   },
 ];
