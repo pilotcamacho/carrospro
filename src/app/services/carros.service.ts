@@ -10,7 +10,7 @@ type Carro = Schema['Carro']['type'];
 
 const client = generateClient<Schema>();
 
-const carroSelectionSet = ['id', 'name', 'brand', 'model', 'plate', 'color', 'documents.*', 'services.*', 'propietarios.*'] as const;
+const carroSelectionSet = ['id', 'name', 'brand', 'model', 'year', 'plate', 'color', 'documents.*', 'services.*', 'propietarios.*'] as const;
 type CarroSelectionSet = SelectionSet<Schema['Carro']['type'], typeof carroSelectionSet>;
 
 @Injectable({
@@ -34,16 +34,15 @@ export class CarrosService {
     {
       name: string,
       brand: string,
-      year: number,
       model: string,
+      year: number,
       plate: string,
-      color: string,
-      location: any
+      color: string
     }
   ): Promise<any> {
-    const usuario = this.usuarioSrv.usuarioId
-    const createdAt = new Date().toISOString()
-    const currentLocation = await this.locationSrv.getCurrentLocation()
+    // const usuario = this.usuarioSrv.usuarioId
+    // const createdAt = new Date().toISOString()
+    // const currentLocation = await this.locationSrv.getCurrentLocation()
     const { data: createdCarro, errors } = await client.models.Carro.create(
       carroData );
     console.log('CarrosService::createCarro', createdCarro, errors);

@@ -15,4 +15,26 @@
       <ion-title size="large">carros</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list>
+    <ion-card *ngFor="let carro of carros">
+      <ion-card-header>
+        <ion-card-title>{{ carro.name }}</ion-card-title>
+        <ion-card-subtitle>{{ carro.brand }} - {{ carro.model }} ({{ carro.year }})</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-label color="medium">Placa</ion-label>
+          <ion-note slot="end">{{ carro.plate }}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label color="medium">Color</ion-label>
+          <ion-note slot="end">{{ carro.color }}</ion-note>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+
+
+  <ion-button expand="block" (click)="addCarro()">Agregar nuevo carro</ion-button>
 </ion-content>

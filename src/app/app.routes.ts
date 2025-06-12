@@ -12,7 +12,8 @@ export const routes: Routes = [
   },
 
   {
-    path: 'carro/:carroId',
+    // path: 'carro/:carroId',
+    path: 'carro',
     loadComponent: () => import('./carros/carro/carro.page').then(m => m.CarroPage)
   },
 ];
