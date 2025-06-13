@@ -24,6 +24,7 @@ export class DocumentPage implements OnInit {
   servicioForm!: FormGroup;
   carroId!: string;
 
+  maxDate = '2100-12-31'; // or dynamically set to a far future date if needed
   localDatetimeIssueDate: string = ''; // local time string shown in the picker
   localDatetimeExpirationDate: string = ''; // local time string shown in the picker
 
