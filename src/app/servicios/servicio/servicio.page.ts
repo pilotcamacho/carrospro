@@ -39,11 +39,11 @@ export class ServicioPage implements OnInit {
 
     this.carroId = this.route.snapshot.paramMap.get('carroId')!;
     this.servicioForm = this.fb.group({
-      name: ['Algo', Validators.required],
+      name: ['', Validators.required],
       type: ['Gasolina', Validators.required],
-      description: ['des'],
-      price: [111, [Validators.required, Validators.min(0)]],
-      km: [11, [Validators.required, Validators.min(0)]],
+      description: [''],
+      price: [null, [Validators.required, Validators.min(0)]],
+      km: [null, [Validators.required, Validators.min(0)]],
       dateTime: [this.localDatetime, Validators.required]
     });
   }
