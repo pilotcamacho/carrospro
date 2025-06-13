@@ -27,4 +27,12 @@ export const routes: Routes = [
     path: 'servicio/:carroId',
     loadComponent: () => import('./servicios/servicio/servicio.page').then( m => m.ServicioPage)
   },
+  {
+    path: 'documents',
+    loadComponent: () => import('./documents/documents.page').then( m => m.DocumentsPage)
+  },
+  {
+    path: 'document/:carroId',
+    loadComponent: () => import('./documents/document/document.page').then( m => m.DocumentPage)
+  },
 ];

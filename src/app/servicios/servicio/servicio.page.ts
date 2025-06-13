@@ -74,6 +74,4 @@ export class ServicioPage implements OnInit {
     this.router.navigate(['/carros']); // or back to carro detail
   }
 
-
-
 }

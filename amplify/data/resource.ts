@@ -11,6 +11,7 @@ const schema = a.schema({
     .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
 
   Document: a.model({
+    name: a.string().required(),
     type: a.enum(['jpg', 'pdf']),
     s3_path: a.string(),
     s3_thumbnail_path: a.string(),
@@ -24,7 +25,7 @@ const schema = a.schema({
 
   Service: a.model({
     name: a.string().required(),
-    type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'Llantas', 'Taller']),
+    type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'Llantas', 'Taller', 'Parking']),
     description: a.string(),
     price: a.float().required(),
     km: a.integer().required(),

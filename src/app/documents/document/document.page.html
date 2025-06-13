@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/carros"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nuevo Servicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="servicioForm" (ngSubmit)="onSubmit()">
+
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-textarea formControlName="name"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Fecha expedición</ion-label>
+      <ion-datetime presentation="date" formControlName="issueDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Fecha caducidad</ion-label>
+      <ion-datetime presentation="date" formControlName="expirationDate"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Costo</ion-label>
+      <ion-input type="number" formControlName="cost"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="servicioForm.invalid">
+      Guardar Servicio
+    </ion-button>
+  </form>
+</ion-content>

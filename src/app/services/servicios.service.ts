@@ -5,7 +5,6 @@ import type { Schema } from '../../../amplify/data/resource';
 
 import { LocationService } from './location.service';
 import { UsuarioService } from './usuario.service';
-import { StringAttribute } from 'aws-cdk-lib/aws-cognito';
 
 type Service = Schema['Service']['type'];
 
@@ -14,7 +13,7 @@ const client = generateClient<Schema>();
 const serviceSelectionSet = ['id', 'name', 'type', 'description', 'price', 'km', 'dateTime', 'location.*', 'carroId'] as const;
 type ServiceSelectionSet = SelectionSet<Schema['Service']['type'], typeof serviceSelectionSet>;
 
-type ServiceType = 'Gasolina' | 'CambioAceite' | 'Lavado' | 'Llantas' | 'Taller';
+type ServiceType = 'Gasolina' | 'CambioAceite' | 'Lavado' | 'Llantas' | 'Taller' | 'Parking';
 
 
 @Injectable({
