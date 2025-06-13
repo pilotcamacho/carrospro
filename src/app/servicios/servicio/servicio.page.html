@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/carros"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nuevo Servicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="servicioForm" (ngSubmit)="onSubmit()">
+
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Tipo</ion-label>
+      <ion-select formControlName="type" interface="popover">
+        <ion-select-option value="Gasolina">Gasolina</ion-select-option>
+        <ion-select-option value="CambioAceite">Cambio de Aceite</ion-select-option>
+        <ion-select-option value="Lavado">Lavado</ion-select-option>
+        <ion-select-option value="Llantas">Llantas</ion-select-option>
+        <ion-select-option value="Taller">Taller</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Precio</ion-label>
+      <ion-input type="number" formControlName="price"></ion-input>
+    </ion-item>
+
+      <ion-item>
+      <ion-label position="floating">Km</ion-label>
+      <ion-input type="number" formControlName="km"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Fecha y hora</ion-label>
+      <ion-datetime presentation="date-time" formControlName="dateTime"></ion-datetime>
+    </ion-item>
+
+
+    <ion-button expand="block" type="submit" [disabled]="servicioForm.invalid">
+      Guardar Servicio
+    </ion-button>
+  </form>
+</ion-content>
+

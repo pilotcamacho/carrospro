@@ -19,4 +19,12 @@ export const routes: Routes = [
     path: 'carro-new',
     loadComponent: () => import('./carros/carro-new/carro-new.page').then( m => m.CarroNewPage)
   },
+  {
+    path: 'servicios',
+    loadComponent: () => import('./servicios/servicios.page').then( m => m.ServiciosPage)
+  },
+  {
+    path: 'servicio/:carroId',
+    loadComponent: () => import('./servicios/servicio/servicio.page').then( m => m.ServicioPage)
+  },
 ];

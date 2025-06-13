@@ -42,12 +42,21 @@
             <ion-label color="medium">Color</ion-label>
             <ion-note slot="end">{{ carro.color }}</ion-note>
           </ion-item>
+
+          <!-- + Servicio button -->
+          <div class="ion-padding-top">
+            <ion-button expand="block" color="light" size="small" (click)="goToServicio(carro, $event)">
+              + Servicio
+            </ion-button>
+          </div>
+
         </ion-card-content>
       </ion-card>
     </ion-item>
 
   </ion-item-sliding>
 </ion-list>
+
 
 
 

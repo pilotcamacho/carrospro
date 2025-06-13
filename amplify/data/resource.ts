@@ -27,10 +27,11 @@ const schema = a.schema({
     type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'Llantas', 'Taller']),
     description: a.string(),
     price: a.float().required(),
+    km: a.integer().required(),
     dateTime: a.datetime().required(),
     location: a.customType({
-      lat: a.float().required(),
-      long: a.float().required(),
+      lat: a.float(),
+      long: a.float(),
     }),
     carroId: a.id().required(),
     carro: a.belongsTo('Carro', 'carroId'),

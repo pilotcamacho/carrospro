@@ -67,4 +67,9 @@ export class CarrosPage implements OnInit {
     this.router.navigate(['/carro', carro.id]);
   }
 
+  goToServicio(carro: any, event: Event) {
+    event.stopPropagation(); // Prevent parent item click
+    this.router.navigate(['/servicio', carro.id]); // or whatever your route is
+  }
+
 }
