@@ -10,7 +10,7 @@ type Document = Schema['Document']['type'];
 
 const client = generateClient<Schema>();
 
-const documentSelectionSet = ['id','issueDate', 'expirationDate', 'cost', 'carroId'] as const;
+const documentSelectionSet = ['id', 'name', 'issueDate', 'expirationDate', 'cost', 'carroId'] as const;
 type DocumentSelectionSet = SelectionSet<Schema['Document']['type'], typeof documentSelectionSet>;
 
 type DocumentType = 'jpg' | 'pdf';
