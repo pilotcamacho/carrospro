@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/carros"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Algo más por hacer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="servicioForm" (ngSubmit)="onSubmit()">
+
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-textarea formControlName="name"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+
+
+    <!-- <ion-item>
+      <ion-label>Está listo</ion-label>
+      <ion-toggle formControlName="isDone"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Fecha completar</ion-label>
+      <ion-datetime presentation="date" formControlName="doneDate"></ion-datetime>
+    </ion-item> -->
+
+
+    <ion-button expand="block" type="submit" [disabled]="servicioForm.invalid">
+      Guardar Por Hacer
+    </ion-button>
+  </form>
+</ion-content>

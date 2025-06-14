@@ -35,4 +35,12 @@ export const routes: Routes = [
     path: 'document/:carroId',
     loadComponent: () => import('./documents/document/document.page').then( m => m.DocumentPage)
   },
+  {
+    path: 'to-dos',
+    loadComponent: () => import('./to-dos/to-dos.page').then( m => m.ToDosPage)
+  },
+  {
+    path: 'to-do/:carroId',
+    loadComponent: () => import('./to-dos/to-do/to-do.page').then( m => m.ToDoPage)
+  },
 ];

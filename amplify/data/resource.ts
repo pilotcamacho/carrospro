@@ -10,6 +10,16 @@ const schema = a.schema({
   }).identifier(['id', 'carroId'])
     .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
 
+  ToDo: a.model({
+    name: a.string().required(),
+    description: a.string().required(),
+    isDone: a.boolean().default(false),
+    doneDate: a.date(),
+    carroId: a.id().required(),
+    carro: a.belongsTo('Carro', 'carroId'),
+  }).secondaryIndexes((index) => [index("carroId").sortKeys(['doneDate'])])
+    .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
+
   Document: a.model({
     name: a.string().required(),
     type: a.enum(['jpg', 'pdf']),
@@ -48,6 +58,7 @@ const schema = a.schema({
     color: a.string().required(),
     documents: a.hasMany('Document', 'carroId'),
     services: a.hasMany('Service', 'carroId'),
+    toDos: a.hasMany('ToDo', 'carroId'),
     propietarios: a.hasMany('Propietario', 'carroId'),
   })
     .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
