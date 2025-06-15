@@ -17,7 +17,8 @@ const schema = a.schema({
     doneDate: a.date(),
     carroId: a.id().required(),
     carro: a.belongsTo('Carro', 'carroId'),
-  }).secondaryIndexes((index) => [index("carroId").sortKeys(['doneDate'])])
+    createdAt: a.datetime().required(),
+  }).secondaryIndexes((index) => [index("carroId").sortKeys(['createdAt'])])
     .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
 
   Document: a.model({

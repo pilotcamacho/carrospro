@@ -15,6 +15,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ToDosService } from 'src/app/services/to-do.service';
 import { DocumentsService } from 'src/app/services/documents.service';
 
+import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-carro',
@@ -39,6 +41,7 @@ export class CarroPage implements OnInit {
     private carrosService: CarrosService,
     private toDosService: ToDosService,
     private documentsService: DocumentsService,
+    private alertController: AlertController,
     private router: Router,
     private route: ActivatedRoute
   ) { }
@@ -95,6 +98,7 @@ export class CarroPage implements OnInit {
     this.router.navigate(['/to-do', carro.id]); // or whatever your route is
   }
 
+
   async deleteToDo(id: string) {
     const confirmed = confirm('¿Estás seguro de que deseas eliminar este documento?');
     if (!confirmed) return;
@@ -103,5 +107,35 @@ export class CarroPage implements OnInit {
     this.toDos = this.toDos.filter(doc => doc.id !== id);
   }
 
+  async done(toDo: any) {
+    const alert = await this.alertController.create({
+      header: '¿Marcar como hecho?',
+      message: `¿Estás seguro de que terminaste la actividad: "${toDo.name}"?`, // HTML allowed
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+        {
+          text: 'Sí, hecho',
+          handler: () => {
+            this.markAsDone(toDo);
+          },
+        },
+      ],
+      cssClass: 'custom-alert' // optional, for styling
+    });
 
+    await alert.present();
+  }
+
+
+  markAsDone(toDo: any) {
+    // Lógica para marcar como hecho, por ejemplo:
+    toDo.isDone = true;
+    toDo.doneDate = new Date().toISOString().slice(0, 10);
+    // ... llamar servicio para guardar si aplica
+    this.toDosService.updateToDo(toDo);
+    console.log('Actividad marcada como hecha:', toDo);
+  }
 }

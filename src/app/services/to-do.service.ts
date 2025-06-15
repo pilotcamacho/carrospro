@@ -10,7 +10,7 @@ type ToDo = Schema['ToDo']['type'];
 
 const client = generateClient<Schema>();
 
-const toDoSelectionSet = ['id', 'name', 'description', 'isDone', 'doneDate', 'carroId'] as const;
+const toDoSelectionSet = ['id', 'name', 'description', 'isDone', 'doneDate', 'createdAt', 'carroId'] as const;
 type ToDoSelectionSet = SelectionSet<Schema['ToDo']['type'], typeof toDoSelectionSet>;
 
 type ToDoType = 'jpg' | 'pdf';
@@ -40,7 +40,8 @@ export class ToDosService {
 
   async listToDosByCarroId(carroId: string): Promise<ToDoSelectionSet[]> {
     console.log('ToDosToDo::listToDosByCarroId::carroId: ', carroId)
-    const { data: toDos, errors } = await client.models.ToDo.listToDoByCarroIdAndDoneDate({ carroId: carroId },
+    const { data: toDos, errors } = await client.models.ToDo.listToDoByCarroIdAndCreatedAt(
+      { carroId: carroId },
       { selectionSet: toDoSelectionSet });
     console.log('ToDosToDo::listToDosByCarroId', toDos, errors);
     return toDos;
@@ -57,7 +58,7 @@ export class ToDosService {
     }
   ): Promise<any> {
     const { data: createdToDo, errors } = await client.models.ToDo.create(
-      toDoData);
+      {...toDoData, createdAt: new Date().toISOString() });
     console.log('ToDosToDo::createToDo', createdToDo, errors);
     return createdToDo
   }

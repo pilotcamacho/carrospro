@@ -3,42 +3,43 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/carros"></ion-back-button>
     </ion-buttons>
-    <ion-title>Carro
+    <ion-title>{{ carro.name }}
       <!--<ion-icon name="reload-outline" (click)="goRefreshPage()"></ion-icon>-->
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-item>
+
+  <!-- <ion-item>
     <ion-label position="stacked">Nombre</ion-label>
-    <ion-text>{{ carro.name }}</ion-text>
-  </ion-item>
+    <ion-text></ion-text>
+  </ion-item> -->
 
   <ion-item>
-    <ion-label position="stacked">Marca</ion-label>
-    <ion-text>{{ carro.brand }}</ion-text>
+    <ion-label position="stacked">Marca - Modelo (Año)</ion-label>
+    <ion-text>{{ carro.brand }} - {{ carro.model }} ({{ carro.year }})</ion-text>
   </ion-item>
 
-  <ion-item>
+  <!-- <ion-item>
     <ion-label position="stacked">Modelo</ion-label>
-    <ion-text>{{ carro.model }}</ion-text>
+    <ion-text></ion-text>
   </ion-item>
 
   <ion-item>
     <ion-label position="stacked">Año</ion-label>
-    <ion-text>{{ carro.year }}</ion-text>
-  </ion-item>
+    <ion-text></ion-text>
+  </ion-item> -->
 
   <ion-item>
-    <ion-label position="stacked">Placa</ion-label>
-    <ion-text>{{ carro.plate }}</ion-text>
+    <ion-label position="stacked">Placa - Color</ion-label>
+    <ion-text>{{ carro.plate }} - {{ carro.color }}</ion-text>
   </ion-item>
-
+  <!-- 
   <ion-item>
     <ion-label position="stacked">Color</ion-label>
-    <ion-text>{{ carro.color }}</ion-text>
-  </ion-item>
+    <ion-text></ion-text>
+  </ion-item> -->
 
   <ion-button expand="block" (click)="goToEdit()">
     Editar
@@ -52,70 +53,70 @@
     </ion-button>
   </div>
 
-  <ion-content class="ion-padding">
-    <ion-list *ngIf="toDos.length > 0; else noDocs">
-      <ion-item-sliding *ngFor="let doc of toDos">
-        <ion-item>
-          <ion-label>
-            <h2>{{ doc.name }}</h2>
-            <p>CarroId: {{ doc.carroId }}</p>
-            <p>Name: {{ doc.name }}</p>
-            <p>Description: {{ doc.description }}</p>
-            <p>isDone: {{ doc.isDone }}</p>
-            <p>Date: {{ doc.doneDate | date}}</p>
-          </ion-label>
-        </ion-item>
 
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="deleteToDo(doc.id)">
-            Eliminar
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
+  <ion-list *ngIf="toDos.length > 0; else noDocs">
+    <ion-item-sliding *ngFor="let toDo of toDos">
+      <ion-item (click)="done(toDo)" [ngClass]="{ 'done-item': toDo.isDone, 'pending-item': !toDo.isDone }">
+        <ion-label>
+          <h2>{{ toDo.name }}</h2>
+          <!-- <p>CarroId: {{ doc.carroId }}</p> -->
+          <p>Description: {{ toDo.description }}</p>
+          <p>isDone: {{ toDo.isDone }}</p>
+          <p>Done on: {{ toDo.doneDate | date}}</p>
+          <p><small>{{ toDo.createdAt | date}}</small></p>
+        </ion-label>
+      </ion-item>
 
-    <ng-template #noDocs>
-      <p>No se encontraron cosas por hacer.</p>
-    </ng-template>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteToDo(toDo.id)">
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
-
-
-
-    <!-- + Document button -->
-    <div class="ion-padding-top">
-      <ion-button expand="block" color="light" size="small" (click)="goToDocument(carro, $event)">
-        + Documento
-      </ion-button>
-    </div>
-
-    <ion-list *ngIf="documents.length > 0; else noDocs">
-      <ion-item-sliding *ngFor="let doc of documents">
-        <ion-item>
-          <ion-thumbnail slot="start" *ngIf="doc.s3_thumbnail_path">
-            <ion-img [src]="doc.s3_thumbnail_path"></ion-img>
-          </ion-thumbnail>
-          <ion-label>
-            <h2>{{ doc.name }}</h2>
-            <p>CarroId: {{ doc.carroId }}</p>
-            <p>Tipo: {{ doc.type }}</p>
-            <p>Expedición: {{ doc.issueDate | date }}</p>
-            <p>Caducidad: {{ doc.expirationDate | date }}</p>
-            <p>Costo: {{ doc.cost | currency }}</p>
-          </ion-label>
-        </ion-item>
-
-        <ion-item-options side="end">
-          <ion-item-option color="danger" (click)="deleteDocument(doc.id)">
-            Eliminar
-          </ion-item-option>
-        </ion-item-options>
-      </ion-item-sliding>
-    </ion-list>
-
-    <ng-template #noDocs>
-      <p>No se encontraron documentos.</p>
-    </ng-template>
+  <ng-template #noDocs>
+    <p>No se encontraron cosas por hacer.</p>
+  </ng-template>
 
 
 
-  </ion-content>
+
+  <!-- + Document button -->
+  <div class="ion-padding-top">
+    <ion-button expand="block" color="light" size="small" (click)="goToDocument(carro, $event)">
+      + Documento
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="documents.length > 0; else noDocs">
+    <ion-item-sliding *ngFor="let doc of documents">
+      <ion-item>
+        <ion-thumbnail slot="start" *ngIf="doc.s3_thumbnail_path">
+          <ion-img [src]="doc.s3_thumbnail_path"></ion-img>
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ doc.name }}</h2>
+          <p>CarroId: {{ doc.carroId }}</p>
+          <p>Tipo: {{ doc.type }}</p>
+          <p>Expedición: {{ doc.issueDate | date }}</p>
+          <p>Caducidad: {{ doc.expirationDate | date }}</p>
+          <p>Costo: {{ doc.cost | currency }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteDocument(doc.id)">
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ng-template #noDocs>
+    <p>No se encontraron documentos.</p>
+  </ng-template>
+
+
+
+</ion-content>
