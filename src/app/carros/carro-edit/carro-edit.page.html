@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/carros"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Carro
+      <!--<ion-icon name="reload-outline" (click)="goRefreshPage()"></ion-icon>-->
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="carroForm" (ngSubmit)="onSubmit()">
+
+    <ion-item>
+      <ion-label position="floating">Nombre</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Marca</ion-label>
+      <ion-input formControlName="brand"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Modelo</ion-label>
+      <ion-input formControlName="model"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Año</ion-label>
+      <ion-input type="number" formControlName="year"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Placa</ion-label>
+      <ion-input formControlName="plate"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Color</ion-label>
+      <ion-input formControlName="color"></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" type="submit" [disabled]="carroForm.invalid">
+      Guardar
+    </ion-button>
+  </form>
+</ion-content>
+

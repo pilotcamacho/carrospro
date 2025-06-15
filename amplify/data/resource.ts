@@ -12,7 +12,7 @@ const schema = a.schema({
 
   ToDo: a.model({
     name: a.string().required(),
-    description: a.string().required(),
+    description: a.string(),
     isDone: a.boolean().default(false),
     doneDate: a.date(),
     carroId: a.id().required(),

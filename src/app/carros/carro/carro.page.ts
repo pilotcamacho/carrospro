@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonLabel, IonItem,
-  IonButton, IonInput
+  IonButton, IonInput, IonItemOptions,
+  IonList, IonItemSliding, IonItemOption, IonImg, IonThumbnail,
+  IonText
 } from '@ionic/angular/standalone';
 
 import { Router } from '@angular/router';
 import { CarrosService } from 'src/app/services/carros.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToDosService } from 'src/app/services/to-do.service';
+import { DocumentsService } from 'src/app/services/documents.service';
 
 
 @Component({
@@ -16,33 +21,39 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './carro.page.html',
   styleUrls: ['./carro.page.scss'],
   standalone: true,
-  imports: [IonItem, IonLabel, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
-    ReactiveFormsModule, IonButton, IonInput
+  imports: [IonImg, IonThumbnail, IonItemOptions, IonItem, IonLabel, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
+    ReactiveFormsModule, IonButton,
+    IonList, IonItemSliding, IonItemOption,
+    IonText
   ]
 })
 export class CarroPage implements OnInit {
 
-  carroForm!: FormGroup;
+  carro: any = {};
+  toDos: any[] = [];
+  documents: any[] = [];
+
 
   constructor(
     private fb: FormBuilder,
     private carrosService: CarrosService,
+    private toDosService: ToDosService,
+    private documentsService: DocumentsService,
     private router: Router,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.carroForm = this.fb.group({
-      id: ['', Validators.required],
-      name: ['', Validators.required],
-      brand: ['', Validators.required],
-      model: ['', Validators.required],
-      year: [null, [Validators.required, Validators.min(1900)]],
-      plate: ['', Validators.required],
-      color: ['', Validators.required]
-    });
+    // const carroId = this.route.snapshot.paramMap.get('carroId');
 
+    // if (carroId && carroId !== 'new') {
+    //   this.loadCarro(carroId);
+    // }
+  }
+
+  ionViewWillEnter() {
     const carroId = this.route.snapshot.paramMap.get('carroId');
+    console.log('CarroNewPage::ionViewWillEnter()::carroId: ', carroId);
 
     if (carroId && carroId !== 'new') {
       this.loadCarro(carroId);
@@ -51,26 +62,46 @@ export class CarroPage implements OnInit {
 
   async loadCarro(carroId: string) {
     try {
-      const carro = await this.carrosService.getCarroById(carroId);
-      if (carro) {
-        this.carroForm.patchValue(carro);
-      }
+      this.carro = await this.carrosService.getCarroById(carroId);
+      this.toDos = await this.toDosService.listToDosByCarroId(carroId);
+      this.documents = await this.documentsService.listDocumentsByCarroId(carroId);
+
     } catch (error) {
       console.error('Error loading carro:', error);
       // Optional: redirect or show message
     }
   }
 
-  async onSubmit() {
-    if (this.carroForm.invalid) return;
-
-    const carroData = {
-      ...this.carroForm.value
-    };
-
-    const newCarro = await this.carrosService.updateCarro(carroData);
-    console.log('Carro creado:', newCarro);
-    this.router.navigate(['/carros']); // or wherever the list of carros is
+  goToEdit() {
+    this.router.navigate(['/carro-edit'], { queryParams: { carroId: this.carro.id } });
   }
+
+  goToDocument(carro: any, event: Event) {
+    event.stopPropagation(); // Prevent parent item click
+    this.router.navigate(['/document', carro.id]); // or whatever your route is
+  }
+
+  async deleteDocument(id: string) {
+    const confirmed = confirm('¿Estás seguro de que deseas eliminar este documento?');
+    if (!confirmed) return;
+
+    await this.documentsService.deleteDocument(id);
+    this.documents = this.documents.filter(doc => doc.id !== id);
+  }
+
+
+  goToToDo(carro: any, event: Event) {
+    event.stopPropagation(); // Prevent parent item click
+    this.router.navigate(['/to-do', carro.id]); // or whatever your route is
+  }
+
+  async deleteToDo(id: string) {
+    const confirmed = confirm('¿Estás seguro de que deseas eliminar este documento?');
+    if (!confirmed) return;
+
+    await this.toDosService.deleteToDo(id);
+    this.toDos = this.toDos.filter(doc => doc.id !== id);
+  }
+
 
 }

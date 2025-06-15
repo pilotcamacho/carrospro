@@ -37,17 +37,17 @@ import { DocumentsService } from '../services/documents.service'; // adjust the 
 export class DocumentsPage implements OnInit {
   documents: any[] = [];
 
-  constructor(private documentsService: DocumentsService) {}
+  constructor(private documentsService: DocumentsService) { }
 
   async ngOnInit() {
     this.documents = await this.documentsService.listDocuments();
   }
 
   async deleteDocument(id: string) {
-  const confirmed = confirm('¿Estás seguro de que deseas eliminar este documento?');
-  if (!confirmed) return;
+    const confirmed = confirm('¿Estás seguro de que deseas eliminar este documento?');
+    if (!confirmed) return;
 
-  await this.documentsService.deleteDocument(id);
-  this.documents = this.documents.filter(doc => doc.id !== id);
-}
+    await this.documentsService.deleteDocument(id);
+    this.documents = this.documents.filter(doc => doc.id !== id);
+  }
 }

@@ -43,4 +43,8 @@ export const routes: Routes = [
     path: 'to-do/:carroId',
     loadComponent: () => import('./to-dos/to-do/to-do.page').then( m => m.ToDoPage)
   },
+  {
+    path: 'carro-edit',
+    loadComponent: () => import('./carros/carro-edit/carro-edit.page').then( m => m.CarroEditPage)
+  },
 ];

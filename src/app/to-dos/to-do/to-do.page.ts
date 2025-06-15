@@ -42,7 +42,7 @@ export class ToDoPage implements OnInit {
     this.carroId = this.route.snapshot.paramMap.get('carroId')!;
     this.servicioForm = this.fb.group({
       name: [null, Validators.required],
-      description: [null, Validators.required],
+      description: [null],
       // isDone: [false, Validators.required],
       // doneDate: [this.dateDone, Validators.required],
     });

@@ -38,6 +38,14 @@ export class DocumentsService {
     return documents;
   }
 
+  async listDocumentsByCarroId(carroId: string): Promise<DocumentSelectionSet[]> {
+    const { data: documents, errors } = await client.models.Document.listDocumentByCarroIdAndExpirationDate(
+      { carroId: carroId },
+      { selectionSet: documentSelectionSet });
+    console.log('DocumentsDocument::listDocuments', documents, errors);
+    return documents;
+  }
+
 
   async createDocument(documentData:
     {
@@ -49,12 +57,12 @@ export class DocumentsService {
     }
   ): Promise<any> {
     const { data: createdDocument, errors } = await client.models.Document.create(
-      documentData );
+      documentData);
     console.log('DocumentsDocument::createDocument', createdDocument, errors);
     return createdDocument
   }
 
-  
+
   async updateDocument(documentData:
     {
       id: string,
@@ -67,7 +75,7 @@ export class DocumentsService {
     // const createdAt = new Date().toISOString()
     // const currentLocation = await this.locationSrv.getCurrentLocation()
     const { data: createdDocument, errors } = await client.models.Document.update(
-      documentData );
+      documentData);
     console.log('DocumentsDocument::createDocument', createdDocument, errors);
     return createdDocument
   }

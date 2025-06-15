@@ -10,46 +10,112 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <form [formGroup]="carroForm" (ngSubmit)="onSubmit()">
+  <ion-item>
+    <ion-label position="stacked">Nombre</ion-label>
+    <ion-text>{{ carro.name }}</ion-text>
+  </ion-item>
 
-    <!-- <ion-item>
-      <ion-label position="floating">Id</ion-label>
-      <ion-input formControlName="id"></ion-input>
-    </ion-item> -->
+  <ion-item>
+    <ion-label position="stacked">Marca</ion-label>
+    <ion-text>{{ carro.brand }}</ion-text>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Modelo</ion-label>
+    <ion-text>{{ carro.model }}</ion-text>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Año</ion-label>
+    <ion-text>{{ carro.year }}</ion-text>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Placa</ion-label>
+    <ion-text>{{ carro.plate }}</ion-text>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Color</ion-label>
+    <ion-text>{{ carro.color }}</ion-text>
+  </ion-item>
+
+  <ion-button expand="block" (click)="goToEdit()">
+    Editar
+  </ion-button>
 
 
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input formControlName="name"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Marca</ion-label>
-      <ion-input formControlName="brand"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Modelo</ion-label>
-      <ion-input formControlName="model"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Año</ion-label>
-      <ion-input type="number" formControlName="year"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Placa</ion-label>
-      <ion-input formControlName="plate"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Color</ion-label>
-      <ion-input formControlName="color"></ion-input>
-    </ion-item>
-
-    <ion-button expand="block" type="submit" [disabled]="carroForm.invalid">
-      Guardar cambios
+  <!-- + ToDo button -->
+  <div class="ion-padding-top">
+    <ion-button expand="block" color="light" size="small" (click)="goToToDo(carro, $event)">
+      + ToDo
     </ion-button>
-  </form>
-</ion-content>
+  </div>
+
+  <ion-content class="ion-padding">
+    <ion-list *ngIf="toDos.length > 0; else noDocs">
+      <ion-item-sliding *ngFor="let doc of toDos">
+        <ion-item>
+          <ion-label>
+            <h2>{{ doc.name }}</h2>
+            <p>CarroId: {{ doc.carroId }}</p>
+            <p>Name: {{ doc.name }}</p>
+            <p>Description: {{ doc.description }}</p>
+            <p>isDone: {{ doc.isDone }}</p>
+            <p>Date: {{ doc.doneDate | date}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteToDo(doc.id)">
+            Eliminar
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <ng-template #noDocs>
+      <p>No se encontraron cosas por hacer.</p>
+    </ng-template>
+
+
+
+
+    <!-- + Document button -->
+    <div class="ion-padding-top">
+      <ion-button expand="block" color="light" size="small" (click)="goToDocument(carro, $event)">
+        + Documento
+      </ion-button>
+    </div>
+
+    <ion-list *ngIf="documents.length > 0; else noDocs">
+      <ion-item-sliding *ngFor="let doc of documents">
+        <ion-item>
+          <ion-thumbnail slot="start" *ngIf="doc.s3_thumbnail_path">
+            <ion-img [src]="doc.s3_thumbnail_path"></ion-img>
+          </ion-thumbnail>
+          <ion-label>
+            <h2>{{ doc.name }}</h2>
+            <p>CarroId: {{ doc.carroId }}</p>
+            <p>Tipo: {{ doc.type }}</p>
+            <p>Expedición: {{ doc.issueDate | date }}</p>
+            <p>Caducidad: {{ doc.expirationDate | date }}</p>
+            <p>Costo: {{ doc.cost | currency }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option color="danger" (click)="deleteDocument(doc.id)">
+            Eliminar
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <ng-template #noDocs>
+      <p>No se encontraron documentos.</p>
+    </ng-template>
+
+
+
+  </ion-content>
