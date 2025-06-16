@@ -13,7 +13,7 @@ const client = generateClient<Schema>();
 const serviceSelectionSet = ['id', 'name', 'type', 'description', 'price', 'km', 'dateTime', 'location.*', 'carroId'] as const;
 type ServiceSelectionSet = SelectionSet<Schema['Service']['type'], typeof serviceSelectionSet>;
 
-type ServiceType = 'Gasolina' | 'CambioAceite' | 'Lavado' | 'Llantas' | 'Taller' | 'Parking';
+type ServiceType = 'Gasolina' | 'CambioAceite' | 'Lavado' | 'AguaVidrios' | 'AguaMotor' | 'Llantas' | 'Taller' | 'Parking';
 
 
 @Injectable({
@@ -55,12 +55,12 @@ export class ServicesService {
     // const createdAt = new Date().toISOString()
     const currentLocation = await this.locationSrv.getCurrentLocation()
     const { data: createdService, errors } = await client.models.Service.create(
-      {...serviceData, location: currentLocation} );
+      { ...serviceData, location: currentLocation });
     console.log('ServicesService::createService', createdService, errors);
     return createdService
   }
 
-  
+
   async updateService(serviceData:
     {
       id: string,
@@ -76,7 +76,7 @@ export class ServicesService {
     // const createdAt = new Date().toISOString()
     // const currentLocation = await this.locationSrv.getCurrentLocation()
     const { data: createdService, errors } = await client.models.Service.update(
-      serviceData );
+      serviceData);
     console.log('ServicesService::createService', createdService, errors);
     return createdService
   }

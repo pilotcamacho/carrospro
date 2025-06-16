@@ -36,7 +36,7 @@ const schema = a.schema({
 
   Service: a.model({
     name: a.string().required(),
-    type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'Llantas', 'Taller', 'Parking']),
+    type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'AguaVidrios', 'AguaMotor', 'Llantas', 'Taller', 'Parking']),
     description: a.string(),
     price: a.float().required(),
     km: a.integer().required(),
