@@ -23,7 +23,8 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './carro.page.html',
   styleUrls: ['./carro.page.scss'],
   standalone: true,
-  imports: [IonImg, IonThumbnail, IonItemOptions, IonItem, IonLabel, IonBackButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
+  imports: [IonImg, IonThumbnail, IonItemOptions, IonItem, IonLabel, IonBackButton, IonButtons,
+    IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
     ReactiveFormsModule, IonButton,
     IonList, IonItemSliding, IonItemOption,
     IonText

@@ -35,8 +35,7 @@ const schema = a.schema({
     .authorization((allow) => [allow.group('Admin'), allow.owner(), allow.authenticated().to(['read'])]),
 
   Service: a.model({
-    name: a.string().required(),
-    type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'AguaVidrios', 'AguaMotor', 'Llantas', 'Taller', 'Parking']),
+    type: a.enum(['Gasolina', 'CambioAceite', 'Lavado', 'AguaVidrios', 'AguaMotor', 'Llantas', 'Taller', 'Parking', 'Other']),
     description: a.string(),
     price: a.float().required(),
     km: a.integer().required(),

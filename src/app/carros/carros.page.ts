@@ -16,9 +16,9 @@ import { Router } from '@angular/router';
   templateUrl: './carros.page.html',
   styleUrls: ['./carros.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonCardSubtitle, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton,
+  imports: [IonCardSubtitle, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton,
     IonList, IonItem, IonButton,
-    IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonLabel, IonNote,
+    IonCard, IonCardHeader, IonCardContent, IonCardTitle, // IonLabel, IonNote, IonLabel, 
     IonItemSliding, IonItemOptions, IonItemOption
   ]
 })

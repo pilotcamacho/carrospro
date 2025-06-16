@@ -10,10 +10,10 @@ type Service = Schema['Service']['type'];
 
 const client = generateClient<Schema>();
 
-const serviceSelectionSet = ['id', 'name', 'type', 'description', 'price', 'km', 'dateTime', 'location.*', 'carroId'] as const;
+const serviceSelectionSet = ['id', 'type', 'description', 'price', 'km', 'dateTime', 'location.*', 'carroId'] as const;
 type ServiceSelectionSet = SelectionSet<Schema['Service']['type'], typeof serviceSelectionSet>;
 
-type ServiceType = 'Gasolina' | 'CambioAceite' | 'Lavado' | 'AguaVidrios' | 'AguaMotor' | 'Llantas' | 'Taller' | 'Parking';
+type ServiceType = 'Gasolina' | 'CambioAceite' | 'Lavado' | 'AguaVidrios' | 'AguaMotor' | 'Llantas' | 'Taller' | 'Parking' | 'Other';
 
 
 @Injectable({
