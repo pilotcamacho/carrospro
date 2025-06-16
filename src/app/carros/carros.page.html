@@ -16,50 +16,49 @@
     </ion-toolbar>
   </ion-header>
 
-<ion-list>
-  <ion-item-sliding *ngFor="let carro of carros">
+  <ion-list>
+    <ion-item-sliding *ngFor="let carro of carros">
 
-    <!-- Swipe options -->
-    <ion-item-options side="end">
-      <ion-item-option color="danger" (click)="deleteCarro(carro)">
-        Eliminar
-      </ion-item-option>
-    </ion-item-options>
+      <!-- Swipe options -->
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteCarro(carro)">
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
 
-    <!-- Main tappable area -->
-    <ion-item lines="none" class="ion-no-padding" button detail (click)="goToCarro(carro)">
-      <ion-card class="ion-margin-vertical ion-no-margin card-full-width">
-        <ion-card-header>
-          <ion-card-title>{{ carro.name }}: {{ carro.plate }}</ion-card-title>
-          <ion-card-subtitle>{{ carro.brand }} - {{ carro.model }} ({{ carro.year }}) {{ carro.color }}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <!-- <ion-item lines="none">
-            <ion-label color="medium">Placa</ion-label>
-            <ion-note slot="end"></ion-note>
-          </ion-item> -->
-          <!-- <ion-item lines="none">
-            <ion-label color="medium">Color</ion-label>
-            <ion-note slot="end"></ion-note>
-          </ion-item> -->
+      <!-- Main tappable area -->
+      <ion-item lines="none" class="ion-no-padding" button detail (click)="goToCarro(carro)">
+        <ion-card class="ion-margin-vertical ion-no-margin card-full-width">
+          <ion-card-header>
+            <ion-card-title class="ion-text-wrap">
+              {{ carro.plate }}: {{ carro.name }}
+              <ion-badge color="success" class="ion-margin-start">
+                {{ carro.toDos?.length || 0 }}
+              </ion-badge>
+            </ion-card-title>
+            <ion-card-subtitle>
+              {{ carro.brand }} - {{ carro.model }} ({{ carro.year }}) {{ carro.color }}
+            </ion-card-subtitle>
+          </ion-card-header>
 
-          <!-- + Servicio button -->
-          <div class="ion-padding-top">
-            <ion-button expand="block" color="light" size="small" (click)="goToServicio(carro, $event)">
-              + Servicio
-            </ion-button>
-          </div>
+          <ion-card-content>
+            <!-- + Servicio button -->
+            <div class="ion-padding-top">
+              <ion-button expand="block" color="dark" size="small" (click)="goToServicio(carro, $event)">
+                + Servicio
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
 
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
 
-  </ion-item-sliding>
-</ion-list>
-
+    </ion-item-sliding>
+  </ion-list>
 
 
 
 
-  <ion-button expand="block" (click)="addCarro()">Agregar nuevo carro</ion-button>
+
+  <ion-button color="light" expand="block" (click)="addCarro()">Agregar nuevo carro</ion-button>
 </ion-content>

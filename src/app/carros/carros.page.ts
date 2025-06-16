@@ -5,7 +5,7 @@ import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton,
   IonList, IonItem, IonButton, IonCardSubtitle,
   IonCard, IonCardHeader, IonCardContent, IonCardTitle, IonLabel,
-  IonNote, IonItemSliding, IonItemOptions, IonItemOption
+  IonNote, IonItemSliding, IonItemOptions, IonItemOption, IonBadge
 } from '@ionic/angular/standalone';
 import { CarrosService } from '../services/carros.service';
 import { } from '@ionic/angular';
@@ -19,7 +19,8 @@ import { Router } from '@angular/router';
   imports: [IonCardSubtitle, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonMenuButton,
     IonList, IonItem, IonButton,
     IonCard, IonCardHeader, IonCardContent, IonCardTitle, // IonLabel, IonNote, IonLabel, 
-    IonItemSliding, IonItemOptions, IonItemOption
+    IonItemSliding, IonItemOptions, IonItemOption,
+    IonBadge
   ]
 })
 export class CarrosPage implements OnInit {
@@ -43,6 +44,7 @@ export class CarrosPage implements OnInit {
   loadCarros() {
     console.log("CarrosPage::loadCarros()")
     this.carrosSrv.listCarros().then(carros => {
+      console.log("CarrosPage::loadCarros():: carros: " + JSON.stringify(carros))
       this.carros = carros;
     });
   }

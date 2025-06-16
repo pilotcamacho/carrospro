@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/carros"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ carro.name }}
+    <ion-title>{{ carro.plate }}: {{ carro.name }}
       <!--<ion-icon name="reload-outline" (click)="goRefreshPage()"></ion-icon>-->
     </ion-title>
   </ion-toolbar>
@@ -19,9 +19,9 @@
   <ion-item>
     <ion-label position="stacked">Marca - Modelo (Año)</ion-label>
     <ion-text>{{ carro.brand }} - {{ carro.model }} ({{ carro.year }})</ion-text>
-  </ion-item>
 
-  <!-- <ion-item>
+
+    <!-- <ion-item>
     <ion-label position="stacked">Modelo</ion-label>
     <ion-text></ion-text>
   </ion-item>
@@ -31,9 +31,8 @@
     <ion-text></ion-text>
   </ion-item> -->
 
-  <ion-item>
     <ion-label position="stacked">Placa - Color</ion-label>
-    <ion-text>{{ carro.plate }} - {{ carro.color }}</ion-text>
+    <ion-text> {{ carro.color }}</ion-text>
   </ion-item>
   <!-- 
   <ion-item>
@@ -41,29 +40,34 @@
     <ion-text></ion-text>
   </ion-item> -->
 
-  <ion-button expand="block" (click)="goToEdit()">
+  <ion-button color="medium" expand="block" (click)="goToEdit()">
     Editar
   </ion-button>
 
 
-  <!-- + ToDo button -->
-  <div class="ion-padding-top">
-    <ion-button expand="block" color="light" size="small" (click)="goToToDo(carro, $event)">
-      + ToDo
-    </ion-button>
-  </div>
+  <!-- + ToDo button and toggle -->
+  <ion-grid class="ion-padding-top">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="10">
+        <ion-button expand="block" color="success" size="small" (click)="goToToDo(carro, $event)">
+          + ToDo
+        </ion-button>
+      </ion-col>
+      <ion-col size="2" class="ion-text-right">
+        <ion-toggle [(ngModel)]="showDone" justify="end"></ion-toggle>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-
-  <ion-list *ngIf="toDos.length > 0; else noDocs">
-    <ion-item-sliding *ngFor="let toDo of toDos">
+  <!-- ToDo list -->
+  <ng-container *ngFor="let toDo of toDos">
+    <ion-item-sliding *ngIf="showDone || !toDo.isDone">
       <ion-item (click)="done(toDo)" [ngClass]="{ 'done-item': toDo.isDone, 'pending-item': !toDo.isDone }">
         <ion-label>
           <h2>{{ toDo.name }}</h2>
-          <!-- <p>CarroId: {{ doc.carroId }}</p> -->
           <p>Description: {{ toDo.description }}</p>
-          <!-- <p>isDone: {{ toDo.isDone }}</p> -->
-          <p>Done on: {{ toDo.doneDate | date}}</p>
-          <p><small>{{ toDo.createdAt | date}}</small></p>
+          <p>Done on: {{ toDo.doneDate | date }}</p>
+          <p><small>{{ toDo.createdAt | date }}</small></p>
         </ion-label>
       </ion-item>
 
@@ -73,13 +77,11 @@
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
-  </ion-list>
+  </ng-container>
 
   <ng-template #noDocs>
     <p>No se encontraron cosas por hacer.</p>
   </ng-template>
-
-
 
 
   <!-- + Document button -->
@@ -116,6 +118,41 @@
   <ng-template #noDocs>
     <p>No se encontraron documentos.</p>
   </ng-template>
+
+
+
+  <!-- + Servicio button -->
+  <div class="ion-padding-top">
+    <ion-button expand="block" color="light" size="small" disabled="">
+      + Servicio
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="services.length > 0; else noServicios">
+    <ion-item-sliding *ngFor="let srv of services">
+      <ion-item>
+        <ion-label>
+          <h2>{{ srv.type }}</h2>
+          <p>Tipo: {{ srv.type }}</p>
+          <p>Descripción: {{ srv.description }}</p>
+          <p>Precio: {{ srv.price }}</p>
+          <p>Km: {{ srv.km }}</p>
+          <p>Fecha: {{ srv.dateTime | date }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteService(srv.id)">
+          Eliminar
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ng-template #noServicios>
+    <p>No se encontraron servicios.</p>
+  </ng-template>
+
 
 
 

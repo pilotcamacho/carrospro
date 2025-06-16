@@ -6,7 +6,7 @@ import {
   IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonLabel, IonItem,
   IonButton, IonInput, IonItemOptions,
   IonList, IonItemSliding, IonItemOption, IonImg, IonThumbnail,
-  IonText
+  IonText, IonGrid, IonRow, IonCol, IonToggle
 } from '@ionic/angular/standalone';
 
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ import { ToDosService } from 'src/app/services/to-do.service';
 import { DocumentsService } from 'src/app/services/documents.service';
 
 import { AlertController } from '@ionic/angular';
+import { ServicesService } from 'src/app/services/servicios.service';
 
 
 @Component({
@@ -27,21 +28,24 @@ import { AlertController } from '@ionic/angular';
     IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,
     ReactiveFormsModule, IonButton,
     IonList, IonItemSliding, IonItemOption,
-    IonText
+    IonText, IonGrid, IonRow, IonCol, IonToggle
   ]
 })
 export class CarroPage implements OnInit {
 
+  showDone: boolean = true;
+
   carro: any = {};
   toDos: any[] = [];
   documents: any[] = [];
-
+  services: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private carrosService: CarrosService,
     private toDosService: ToDosService,
     private documentsService: DocumentsService,
+    private servicesService: ServicesService,
     private alertController: AlertController,
     private router: Router,
     private route: ActivatedRoute
@@ -69,6 +73,7 @@ export class CarroPage implements OnInit {
       this.carro = await this.carrosService.getCarroById(carroId);
       this.toDos = await this.toDosService.listToDosByCarroId(carroId);
       this.documents = await this.documentsService.listDocumentsByCarroId(carroId);
+      this.services = await this.servicesService.listServicesByCarroId(carroId);
 
     } catch (error) {
       console.error('Error loading carro:', error);
@@ -91,6 +96,15 @@ export class CarroPage implements OnInit {
 
     await this.documentsService.deleteDocument(id);
     this.documents = this.documents.filter(doc => doc.id !== id);
+  }
+
+
+  async deleteService(id: string) {
+    const confirmed = confirm('¿Estás seguro de que deseas eliminar este servicio?');
+    if (!confirmed) return;
+
+    await this.servicesService.deleteService(id);
+    this.services = this.services.filter(srv => srv.id !== id);
   }
 
 
@@ -139,4 +153,6 @@ export class CarroPage implements OnInit {
     this.toDosService.updateToDo(toDo);
     console.log('Actividad marcada como hecha:', toDo);
   }
+
+
 }

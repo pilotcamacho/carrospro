@@ -42,7 +42,7 @@ export class ToDosService {
     console.log('ToDosToDo::listToDosByCarroId::carroId: ', carroId)
     const { data: toDos, errors } = await client.models.ToDo.listToDoByCarroIdAndCreatedAt(
       { carroId: carroId },
-      { selectionSet: toDoSelectionSet });
+      { selectionSet: toDoSelectionSet, sortDirection: 'DESC' });
     console.log('ToDosToDo::listToDosByCarroId', toDos, errors);
     return toDos;
   }
@@ -58,7 +58,7 @@ export class ToDosService {
     }
   ): Promise<any> {
     const { data: createdToDo, errors } = await client.models.ToDo.create(
-      {...toDoData, createdAt: new Date().toISOString() });
+      { ...toDoData, createdAt: new Date().toISOString() });
     console.log('ToDosToDo::createToDo', createdToDo, errors);
     return createdToDo
   }

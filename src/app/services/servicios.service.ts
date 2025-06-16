@@ -39,6 +39,14 @@ export class ServicesService {
     return services;
   }
 
+  async listServicesByCarroId(carroId: string): Promise<ServiceSelectionSet[]> {
+    const { data: services, errors } = await client.models.Service.listServiceByCarroIdAndDateTime(
+      { carroId: carroId },
+      { selectionSet: serviceSelectionSet, sortDirection: 'DESC' });
+    console.log('ServicesService::listServices', services, errors);
+    return services;
+  }
+
 
   async createService(serviceData:
     {
